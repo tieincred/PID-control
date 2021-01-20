@@ -1,3 +1,4 @@
 # PID-control
-Task for AUV
-Right now uploaded in notebook can update in .py later.
+PID.py and I have tried this PID on Turtlesim to see how it works.
+Uploaded both files
+
