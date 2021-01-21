@@ -65,13 +65,13 @@ class PID:
 	def setDerivator(self, Derivator):
 		self.Derivator = Derivator
 
-	def setK_const(self,P):
+	def setp_const(self,P):
 		self.const_p=P
 
-	def setKi(self,I):
+	def seti_const(self,I):
 		self.const_i=I
 
-	def setKd(self,D):
+	def setd_const(self,D):
 		self.const_d=D
 		
 	def getError(self):
