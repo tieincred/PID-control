@@ -13,50 +13,48 @@ Original file is located at
 
 class PID:
 	"""
-	Discrete PID control
+	PID control
 	"""
 
-	def __init__(self, P=2.0, I=0.0, D=1.0, Derivator=0, Integrator=0, Integrator_max=500, Integrator_min=-500):
+	def __init__(self, p=5/16, i=0.0, d=0.0, Derivator=0, Integrator=0, Integ_max=200, Integ_min=-200):
 
-		self.Kp=P
-		self.Ki=I
-		self.Kd=D
+		self.const_p=p
+		self.const_i=i
+		self.const_d=d
 		self.Derivator=Derivator
 		self.Integrator=Integrator
-		self.Integrator_max=Integrator_max
-		self.Integrator_min=Integrator_min
-
+		self.Integ_max=Integ_max
+		self.Integ_min=Integ_min
+		self.err=0.0
 		self.set_point=0.0
-		self.error=0.0
+		
 
-	def update(self, error):
+	def error_update(self, err):
 		"""
-		Calculate PID output value for given reference input and feedback
+		PID output value for input 
 		"""
 
-		self.error = error
+		self.error = err
 
-		self.P_value = self.Kp * self.error
-		self.D_value = self.Kd * ( self.error - self.Derivator)
+		self.P_cmd = self.const_p * self.err
+		self.D_cmd = self.const_d * ( self.err - self.Derivator)
 		self.Derivator = self.error
 
-		self.Integrator = self.Integrator + self.error
+		self.Integrator = self.Integrator + self.err
 
-		if self.Integrator > self.Integrator_max:
-			self.Integrator = self.Integrator_max
-		elif self.Integrator < self.Integrator_min:
-			self.Integrator = self.Integrator_min
+		if self.Integrator > self.Integ_max:
+			self.Integrator = self.Integ_max
+		elif self.Integrator < self.Integ_min:
+			self.Integrator = self.Integ_min
 
-		self.I_value = self.Integrator * self.Ki
+		self.I_cmd = self.Integrator * self.const_i
 
-		PID = self.P_value + self.I_value + self.D_value
+		PID = self.P_cmd + self.I_cmd + self.D_cmd
 
 		return PID
 
 	def setPoint(self,set_point):
-		"""
-		Initilize the setpoint of PID
-		"""
+		
 		self.set_point = set_point
 		self.Integrator=0
 		self.Derivator=0
@@ -67,23 +65,24 @@ class PID:
 	def setDerivator(self, Derivator):
 		self.Derivator = Derivator
 
-	def setKp(self,P):
-		self.Kp=P
+	def setK_const(self,P):
+		self.const_p=P
 
 	def setKi(self,I):
-		self.Ki=I
+		self.const_i=I
 
 	def setKd(self,D):
-		self.Kd=D
+		self.const_d=D
+		
+	def getError(self):
+		return self.err	
 
 	def getPoint(self):
 		return self.set_point
-
-	def getError(self):
-		return self.error
+        	
+	def getDerivator(self):
+		return self.Derivator
 
 	def getIntegrator(self):
 		return self.Integrator
 
-	def getDerivator(self):
-		return self.Derivator
