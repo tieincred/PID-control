@@ -29,13 +29,13 @@ class turtle_PID():
         self.angle_PID = PID()
         self.distance_PID = PID()
 
-        self.angle_PID.setKp(1.4)
-        self.angle_PID.setKi(0)
-        self.angle_PID.setKd(0)
+        self.angle_PID.setconst_p(1.4)
+        self.angle_PID.setconst_i(0)
+        self.angle_PID.setconst_d(0)
 
-        self.distance_PID.setKp(1.4)
-        self.distance_PID.setKi(0)
-        self.distance_PID.setKd(0)
+        self.distance_PID.setconst_p(1.4)
+        self.distance_PID.setconst_i(0)
+        self.distance_PID.setconst_d(0)
 
         self.msg = Twist()
 
